@@ -1084,6 +1084,12 @@ Resources:
               command:
                 Fn::Sub: |
                   #!/bin/bash
+                  export http_proxy="proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128"
+                  export https_proxy=$http_proxy
+                  export HTTP_PROXY=$http_proxy
+                  export HTTPS_PROXY=$http_proxy
+                  export no_proxy=".internal,localhost,169.254.169.254"
+                  export NO_PROXY=$no_proxy
                   KEY=dummy
                   # wait until the key is available (the ansible controller puts it there)
                   TRIES=0
@@ -1134,6 +1140,12 @@ Resources:
         Fn::Base64:
           Fn::Sub: |
             #!/bin/bash
+            export http_proxy="proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128"
+            export https_proxy=$http_proxy
+            export HTTP_PROXY=$http_proxy
+            export HTTPS_PROXY=$http_proxy
+            export no_proxy=".internal,localhost,169.254.169.254"
+            export NO_PROXY=$no_proxy
             export PATH=$PATH:/usr/local/bin
             curl -O https://bootstrap.pypa.io/get-pip.py && python get-pip.py &> /dev/null
             pip install awscli --ignore-installed six &> /dev/null
@@ -1165,6 +1177,12 @@ Resources:
               command:
                 Fn::Sub: |
                   #!/bin/bash
+                  export http_proxy="proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128"
+                  export https_proxy=$http_proxy
+                  export HTTP_PROXY=$http_proxy
+                  export HTTPS_PROXY=$http_proxy
+                  export no_proxy=".internal,localhost,169.254.169.254"
+                  export NO_PROXY=$no_proxy
                   KEY=dummy
                   # wait until the key is available (the ansible controller puts it there)
                   TRIES=0
@@ -1216,6 +1234,12 @@ Resources:
         Fn::Base64:
           Fn::Sub: |
             #!/bin/bash
+            export http_proxy="proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128"
+            export https_proxy=$http_proxy
+            export HTTP_PROXY=$http_proxy
+            export HTTPS_PROXY=$http_proxy
+            export no_proxy=".internal,localhost,169.254.169.254"
+            export NO_PROXY=$no_proxy
             export PATH=$PATH:/usr/local/bin
             curl -O https://bootstrap.pypa.io/get-pip.py && python get-pip.py &> /dev/null
             pip install awscli --ignore-installed six &> /dev/null
@@ -1247,6 +1271,12 @@ Resources:
               command:
                 Fn::Sub: |
                   #!/bin/bash
+                  export http_proxy="proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128"
+                  export https_proxy=$http_proxy
+                  export HTTP_PROXY=$http_proxy
+                  export HTTPS_PROXY=$http_proxy
+                  export no_proxy=".internal,localhost,169.254.169.254"
+                  export NO_PROXY=$no_proxy
                   KEY=dummy
                   # wait until the key is available (the ansible controller puts it there)
                   TRIES=0
@@ -1297,6 +1327,12 @@ Resources:
         Fn::Base64:
           Fn::Sub: |
             #!/bin/bash
+            export http_proxy="proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128"
+            export https_proxy=$http_proxy
+            export HTTP_PROXY=$http_proxy
+            export HTTPS_PROXY=$http_proxy
+            export no_proxy=".internal,localhost,169.254.169.254"
+            export NO_PROXY=$no_proxy
             export PATH=$PATH:/usr/local/bin
             curl -O https://bootstrap.pypa.io/get-pip.py && python get-pip.py &> /dev/null
             pip install awscli --ignore-installed six &> /dev/null
@@ -1330,6 +1366,12 @@ Resources:
               command:
                 Fn::Sub: |
                   #!/bin/bash
+                  export http_proxy="proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128"
+                  export https_proxy=$http_proxy
+                  export HTTP_PROXY=$http_proxy
+                  export HTTPS_PROXY=$http_proxy
+                  export no_proxy=".internal,localhost,169.254.169.254"
+                  export NO_PROXY=$no_proxy
                   KEY=dummy
                   # wait until the key is available (the ansible controller puts it there)
                   TRIES=0
@@ -1373,6 +1415,12 @@ Resources:
         Fn::Base64:
           Fn::Sub: |
             #!/bin/bash
+            export http_proxy="proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128"
+            export https_proxy=$http_proxy
+            export HTTP_PROXY=$http_proxy
+            export HTTPS_PROXY=$http_proxy
+            export no_proxy=".internal,localhost,169.254.169.254"
+            export NO_PROXY=$no_proxy
             export PATH=$PATH:/usr/local/bin
             curl -O https://bootstrap.pypa.io/get-pip.py && python get-pip.py &> /dev/null
             pip install awscli --ignore-installed six &> /dev/null
@@ -1854,6 +1902,12 @@ Resources:
         Fn::Base64:
           Fn::Sub: |
             #!/bin/bash
+            export http_proxy="proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128"
+            export https_proxy=$http_proxy
+            export HTTP_PROXY=$http_proxy
+            export HTTPS_PROXY=$http_proxy
+            export no_proxy=".internal,localhost,169.254.169.254"
+            export NO_PROXY=$no_proxy
             export PATH=$PATH:/usr/local/bin:/opt/aws/bin
             pip install awscli --ignore-installed six &> /dev/null
             # remove pre-installed cfn bootstrap utilities
