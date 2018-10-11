@@ -1,1 +1,0 @@
-zip -r log-$(date +%F).zip log

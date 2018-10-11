@@ -1,0 +1,1 @@
+saml2aws -a velodnp exec -- aws s3 sync --delete --exclude "*.git/*" . s3://sas-viya-installation/quickstart-sas-viya/

@@ -1,0 +1,1 @@
+tar --force-local -zcf log-$(date +%FT%T).tar.gz log
