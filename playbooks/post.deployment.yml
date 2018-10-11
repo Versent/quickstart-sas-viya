@@ -3,7 +3,13 @@
 - hosts: controller
   become: yes
   become_user: sas
-
+  environment:
+    http_proxy: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
+    https_proxy: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
+    HTTP_PROXY: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
+    HTTPS_PROXY: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
+    no_proxy: '169.254.169.254,.internal,localhost,127.0.0.1'
+    NO_PROXY: '169.254.169.254,.internal,localhost,127.0.0.1'
   tasks:
   - name: add ELB/Domain to CAS configuration
     lineinfile:
@@ -26,6 +32,13 @@
 - hosts: stateful
   become: yes
   become_user: root
+  environment:
+    http_proxy: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
+    https_proxy: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
+    HTTP_PROXY: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
+    HTTPS_PROXY: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
+    no_proxy: '169.254.169.254,.internal,localhost,127.0.0.1'
+    NO_PROXY: '169.254.169.254,.internal,localhost,127.0.0.1'
 
   tasks:
   - name: set up sharedVault
@@ -44,6 +57,13 @@
 - hosts: sas-all
   become: yes
   become_user: root
+  environment:
+    http_proxy: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
+    https_proxy: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
+    HTTP_PROXY: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
+    HTTPS_PROXY: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
+    no_proxy: '169.254.169.254,.internal,localhost,127.0.0.1'
+    NO_PROXY: '169.254.169.254,.internal,localhost,127.0.0.1'
 
   tasks:
   - name: create and mount /backups directory
@@ -95,6 +115,13 @@
    - stateful
   become: yes
   become_user: root
+  environment:
+    http_proxy: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
+    https_proxy: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
+    HTTP_PROXY: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
+    HTTPS_PROXY: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
+    no_proxy: '169.254.169.254,.internal,localhost,127.0.0.1'
+    NO_PROXY: '169.254.169.254,.internal,localhost,127.0.0.1'
 
   tasks:
 
@@ -117,6 +144,13 @@
 - hosts: prog
   become: yes
   become_user: root
+  environment:
+    http_proxy: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
+    https_proxy: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
+    HTTP_PROXY: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
+    HTTPS_PROXY: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
+    no_proxy: '169.254.169.254,.internal,localhost,127.0.0.1'
+    NO_PROXY: '169.254.169.254,.internal,localhost,127.0.0.1'
 
   tasks:
 
@@ -141,6 +175,13 @@
 - hosts: controller
   become: yes
   become_user: root
+  environment:
+    http_proxy: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
+    https_proxy: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
+    HTTP_PROXY: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
+    HTTPS_PROXY: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
+    no_proxy: '169.254.169.254,.internal,localhost,127.0.0.1'
+    NO_PROXY: '169.254.169.254,.internal,localhost,127.0.0.1'
 
   tasks:
   - name: add controller cloudwatch agent configuration
@@ -160,6 +201,13 @@
 - hosts: sas-all
   become: yes
   become_user: root
+  environment:
+    http_proxy: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
+    https_proxy: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
+    HTTP_PROXY: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
+    HTTPS_PROXY: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
+    no_proxy: '169.254.169.254,.internal,localhost,127.0.0.1'
+    NO_PROXY: '169.254.169.254,.internal,localhost,127.0.0.1'
 
   tasks:
 
@@ -175,5 +223,3 @@
     cron: name="restart awslogs" hour="0" minute="15" job="service awslogs restart"
     tags:
       - cloudwatch
-
-

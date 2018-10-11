@@ -2,7 +2,13 @@
 - hosts: all
   become: yes
   become_user: root
-
+  environment:
+    http_proxy: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
+    https_proxy: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
+    HTTP_PROXY: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
+    HTTPS_PROXY: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
+    no_proxy: '169.254.169.254,.internal,localhost,127.0.0.1'
+    NO_PROXY: '169.254.169.254,.internal,localhost,127.0.0.1'
   tasks:
 
   - name: update hostname
@@ -35,6 +41,13 @@
 - hosts: prog
   become: yes
   become_user: root
+  environment:
+    http_proxy: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
+    https_proxy: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
+    HTTP_PROXY: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
+    HTTPS_PROXY: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
+    no_proxy: '169.254.169.254,.internal,localhost,127.0.0.1'
+    NO_PROXY: '169.254.169.254,.internal,localhost,127.0.0.1'
 
   tasks:
 
@@ -48,6 +61,13 @@
 - hosts: controller
   become: yes
   become_user: root
+  environment:
+    http_proxy: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
+    https_proxy: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
+    HTTP_PROXY: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
+    HTTPS_PROXY: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
+    no_proxy: '169.254.169.254,.internal,localhost,127.0.0.1'
+    NO_PROXY: '169.254.169.254,.internal,localhost,127.0.0.1'
 
   tasks:
 
@@ -104,6 +124,3 @@
       path: /sastmp/cascache
       state: directory
       mode: 0777
-
-
-
