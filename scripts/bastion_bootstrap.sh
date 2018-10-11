@@ -52,6 +52,11 @@ function setup_environment_variables() {
 
   export REGION ETHO_MAC EIP_LIST CWG BASTION_MNT BASTION_LOG BASTION_LOGFILE BASTION_LOGFILE_SHADOW \
           LOCAL_IP_ADDRESS INSTANCE_ID
+
+    #versent
+    echo http_proxy : $http_proxy
+    echo no_proxy   : $no_proxy
+    #/versent
 }
 
 
@@ -154,9 +159,9 @@ EOF
 
     echo " declare -rx BASTION_LOG=${BASTION_MNT}/${BASTION_LOG}" >> /etc/bashrc
 
-cat <<'EOF' >> /etc/bashrc
-declare -rx PROMPT_COMMAND='history -a >(logger -t "ON: $(date)   [FROM]:${IP}   [USER]:${USER}   [PWD]:${PWD}" -s 2>>${BASTION_LOG})'
-EOF
+# cat <<'EOF' >> /etc/bashrc
+# declare -rx PROMPT_COMMAND='history -a >(logger -t "ON: $(date)   [FROM]:${IP}   [USER]:${USER}   [PWD]:${PWD}" -s 2>>${BASTION_LOG})'
+# EOF
     chown root:ec2-user  ${BASTION_MNT}
     chown root:ec2-user  ${BASTION_LOGFILE}
     chown root:ec2-user  ${BASTION_LOGFILE_SHADOW}
@@ -190,8 +195,23 @@ EOF
     export TMPREGION=$(grep region /etc/awslogs/awscli.conf)
     sed -i.back "s/${TMPREGION}/region = ${REGION}/g" /etc/awslogs/awscli.conf
 
+
+    #  versent
+    # Set CloudWatch Agent Proxy
+    echo "HTTP_PROXY=$HTTP_PROXY"     > /etc/awslogs/proxy.conf
+    echo "HTTPS_PROXY=$HTTPS_PROXY"  >> /etc/awslogs/proxy.conf
+    echo "NO_PROXY=$NO_PROXY"        >> /etc/awslogs/proxy.conf
+    # Set Yum HTTP proxy
+    if [ ! -f /var/lib/cloud/instance/sem/config_yum_http_proxy ]; then
+        echo "proxy=http://$HTTP_PROXY" >> /etc/yum.conf
+        echo "$$: $(date +%s.%N | cut -b1-13)" > /var/lib/cloud/instance/sem/config_yum_http_proxy
+    fi
+    #/versent
+
+
     #Restart awslogs service
-    service awslogs restart
+    service awslogs stop
+    service awslogs start
     chkconfig awslogs on
 
     #Run security updates
@@ -474,7 +494,7 @@ function _determine_eip_allocation(){
       eip_allocation=$(aws ec2 describe-addresses --public-ips ${1} --output text --region ${REGION}| egrep 'eipalloc-([a-z0-9]{17})' -o)
   else
       eip_allocation=$(aws ec2 describe-addresses --public-ips ${1} --output text --region ${REGION}| egrep 'eipalloc-([a-z0-9]{8})' -o)
-  fi      
+  fi
 }
 
 function prevent_process_snooping() {
@@ -594,6 +614,6 @@ else
 fi
 
 prevent_process_snooping
-request_eip
+# request_eip
 
 echo "Bootstrap complete."

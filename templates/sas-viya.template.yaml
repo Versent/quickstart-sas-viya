@@ -1720,14 +1720,14 @@ Resources:
 
           commands:
             01-bootstrap:
-              command: /tmp/bastion_bootstrap.sh --enable false
+              command: bash -x /tmp/bastion_bootstrap.sh --enable false
             02-cloudwatch:
               command: >-
                 sed -i 's/{instance_id}/ansible-controller-commands.log/' /etc/awslogs/awslogs.conf;
                 cat /tmp/cloudwatch.conf >> /etc/awslogs/awslogs.conf;
                 service awslogs restart
             03-prereqs:
-              command: /tmp/ansiblecontroller_prereqs.sh
+              command: bash -x /tmp/ansiblecontroller_prereqs.sh
         sasprep:
           files:
             /home/ec2-user/deployment-scripts/install.sh:
@@ -1748,7 +1748,7 @@ Resources:
                 SNSTopic: !If [SNSCondition, !Ref SNSTopic, ""]
                 AWSRegion: !Ref AWS::Region
                 KeyPairName: !Ref KeyPairName
-                AnsibleControllerIP: !Ref AnsibleControllerEIP
+                AnsibleControllerIP: '' #!Ref AnsibleControllerEIP
                 NumWorkers: !GetAtt LicenseInfo.NumWorkers
                 CloudFormationStack: !Ref AWS::StackName
                 CloudWatchLogs: !Sub "https://console.aws.amazon.com/cloudwatch/home?region=${AWS::Region}#logStream:group=${CloudWatchLogGroup}"
@@ -1902,7 +1902,7 @@ Resources:
         Fn::Base64:
           Fn::Sub: |
             #!/bin/bash
-            export http_proxy="proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128"
+            export http_proxy="http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128"
             export https_proxy=$http_proxy
             export HTTP_PROXY=$http_proxy
             export HTTPS_PROXY=$http_proxy
