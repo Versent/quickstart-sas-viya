@@ -54,8 +54,12 @@ function setup_environment_variables() {
           LOCAL_IP_ADDRESS INSTANCE_ID
 
     #versent
-    echo http_proxy : $http_proxy
-    echo no_proxy   : $no_proxy
+    export http_proxy="http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128"
+    export https_proxy=$http_proxy
+    export HTTP_PROXY=$http_proxy
+    export HTTPS_PROXY=$http_proxy
+    export no_proxy=".internal,localhost,169.254.169.254"
+    export NO_PROXY=$no_proxy
     #/versent
 }
 
@@ -203,7 +207,7 @@ EOF
     echo "NO_PROXY=$NO_PROXY"        >> /etc/awslogs/proxy.conf
     # Set Yum HTTP proxy
     if [ ! -f /var/lib/cloud/instance/sem/config_yum_http_proxy ]; then
-        echo "proxy=http://$HTTP_PROXY" >> /etc/yum.conf
+        echo "proxy=$HTTP_PROXY" >> /etc/yum.conf
         echo "$$: $(date +%s.%N | cut -b1-13)" > /var/lib/cloud/instance/sem/config_yum_http_proxy
     fi
     #/versent

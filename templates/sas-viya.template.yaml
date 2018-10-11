@@ -914,6 +914,7 @@ Resources:
     Type: AWS::ElasticLoadBalancing::LoadBalancer
     DependsOn: DelCert
     Properties:
+      Scheme: internal
       Subnets:
         - !Ref PublicSubnetID
       SecurityGroups:
@@ -1084,7 +1085,7 @@ Resources:
               command:
                 Fn::Sub: |
                   #!/bin/bash
-                  export http_proxy="proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128"
+                  export http_proxy="http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128"
                   export https_proxy=$http_proxy
                   export HTTP_PROXY=$http_proxy
                   export HTTPS_PROXY=$http_proxy
@@ -1140,7 +1141,7 @@ Resources:
         Fn::Base64:
           Fn::Sub: |
             #!/bin/bash
-            export http_proxy="proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128"
+            export http_proxy="http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128"
             export https_proxy=$http_proxy
             export HTTP_PROXY=$http_proxy
             export HTTPS_PROXY=$http_proxy
@@ -1177,7 +1178,7 @@ Resources:
               command:
                 Fn::Sub: |
                   #!/bin/bash
-                  export http_proxy="proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128"
+                  export http_proxy="http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128"
                   export https_proxy=$http_proxy
                   export HTTP_PROXY=$http_proxy
                   export HTTPS_PROXY=$http_proxy
@@ -1234,7 +1235,7 @@ Resources:
         Fn::Base64:
           Fn::Sub: |
             #!/bin/bash
-            export http_proxy="proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128"
+            export http_proxy="http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128"
             export https_proxy=$http_proxy
             export HTTP_PROXY=$http_proxy
             export HTTPS_PROXY=$http_proxy
@@ -1271,7 +1272,7 @@ Resources:
               command:
                 Fn::Sub: |
                   #!/bin/bash
-                  export http_proxy="proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128"
+                  export http_proxy="http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128"
                   export https_proxy=$http_proxy
                   export HTTP_PROXY=$http_proxy
                   export HTTPS_PROXY=$http_proxy
@@ -1327,7 +1328,7 @@ Resources:
         Fn::Base64:
           Fn::Sub: |
             #!/bin/bash
-            export http_proxy="proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128"
+            export http_proxy="http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128"
             export https_proxy=$http_proxy
             export HTTP_PROXY=$http_proxy
             export HTTPS_PROXY=$http_proxy
@@ -1366,7 +1367,7 @@ Resources:
               command:
                 Fn::Sub: |
                   #!/bin/bash
-                  export http_proxy="proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128"
+                  export http_proxy="http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128"
                   export https_proxy=$http_proxy
                   export HTTP_PROXY=$http_proxy
                   export HTTPS_PROXY=$http_proxy
@@ -1415,7 +1416,7 @@ Resources:
         Fn::Base64:
           Fn::Sub: |
             #!/bin/bash
-            export http_proxy="proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128"
+            export http_proxy="http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128"
             export https_proxy=$http_proxy
             export HTTP_PROXY=$http_proxy
             export HTTPS_PROXY=$http_proxy

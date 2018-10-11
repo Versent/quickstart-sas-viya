@@ -41,6 +41,15 @@ mkdir -p "$LOGDIR"
 export MSGDIR=$HOME/deployment-messages
 mkdir -p "$MSGDIR"
 
+#versent
+export http_proxy="http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128"
+export https_proxy=$http_proxy
+export HTTP_PROXY=$http_proxy
+export HTTPS_PROXY=$http_proxy
+export no_proxy=".internal,localhost,169.254.169.254"
+export NO_PROXY=$no_proxy
+#/versent
+
 #
 # Create the message file containing the "Starting SAS Viya Deployment" message
 #
@@ -397,7 +406,7 @@ fi
 
 # create a key and make available via SSM parameter store
 echo "Creating key" >> "$CMDLOG"
-echo -e y | ssh-keygen -t rsa -q -f ~/.ssh/id_rsa -N ""
+test -f ~/.ssh/id_rsa || echo -e y | ssh-keygen -t rsa -q -f ~/.ssh/id_rsa -N ""
 
 KEY=$(cat ~/.ssh/id_rsa.pub)
 aws --region "{{AWSRegion}}" ssm put-parameter --name "viya-ansiblekey-{{CloudFormationStack}}" --type String --value "$KEY" --overwrite
