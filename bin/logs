@@ -1,1 +1,2 @@
-scp -r ansiblehost:/var/log ./
+cp -a log/ ./log-$(date +%FT%T)
+scp -r ansiblehost:/var/log .
