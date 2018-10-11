@@ -44,6 +44,10 @@
         "ParameterValue": "vpc-67eef503"
     },
     {
+        "ParameterKey": "DeploymentMirror",
+        "ParameterValue": "s3://sas-viya-installation/mirror"
+    },
+    {
         "ParameterKey": "WebIngressLocation",
         "ParameterValue": "10.0.0.0/8"
     }
