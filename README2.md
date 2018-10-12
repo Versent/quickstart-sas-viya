@@ -5,15 +5,16 @@
 - connecting to bastion, then ansible controller, then other hosts.
 
 - proxy config for development/testing/troubleshooting
-        cat <<\EOF | sudo tee /etc/profile.d/http_proxy.sh
+-
+        sudo tee /etc/profile.d/http_proxy.sh <<\EOF
         export http_proxy="http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128"
         export https_proxy=$http_proxy
         export HTTP_PROXY=$http_proxy
         export HTTPS_PROXY=$http_proxy
-        export no_proxy=".internal,localhost,169.254.169.254"
+        export no_proxy=".internal,.sas,.viya.sas,localhost,169.254.169.254"
         export NO_PROXY=$no_proxy
-        EOF
-        chmod +x /etc/profile.d/http_proxy.sh
+EOF
+        sudo chmod +x /etc/profile.d/http_proxy.sh
         . /etc/profile.d/http_proxy.sh
 
 - proxy config in bash shell scripts
