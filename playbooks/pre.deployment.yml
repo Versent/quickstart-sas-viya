@@ -112,7 +112,7 @@
         WantedBy=multi-user.target
   - name: reload systemctl
     command: systemctl daemon-reload
-  - name: ephemeral disks sercive
+  - name: ephemeral disks service
     service:
       name: disks_ephemeral
       enabled: yes
