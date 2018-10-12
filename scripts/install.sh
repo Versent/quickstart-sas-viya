@@ -46,7 +46,7 @@ export http_proxy="http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:
 export https_proxy=$http_proxy
 export HTTP_PROXY=$http_proxy
 export HTTPS_PROXY=$http_proxy
-export no_proxy=".internal,localhost,169.254.169.254"
+export no_proxy=".internal,.sas,.viya.sas,visual,prog,stateful,controller,localhost,169.254.169.254"
 export NO_PROXY=$no_proxy
 #/versent
 
