@@ -1,1 +1,1 @@
-aws s3 sync --exclude "*.git/*" --exclude "log*" . s3://sas-viya-installation/quickstart-sas-viya/
+aws --profile velocity-data-nonprod s3 sync --exclude "*.git/*" --exclude "log*" --exclude "innovation/*" . s3://sas-viya-installation/quickstart-sas-viya/
