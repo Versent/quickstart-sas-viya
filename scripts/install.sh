@@ -417,7 +417,7 @@ aws --region "{{AWSRegion}}" ssm put-parameter --name "viya-ansiblekey-{{CloudFo
 echo "Checking Viya VMs" >> "$CMDLOG"
 let NUMNODES=4
 while ! [ "$NUMNODES"  -eq "$(echo "$STATUS" | grep "CREATE_COMPLETE" | wc -w)" ]; do
-  sleep 3
+  sleep 5
   STATUS=$(aws --no-paginate --region "{{AWSRegion}}" cloudformation describe-stack-resources --stack-name "{{CloudFormationStack}}"  --query 'StackResources[?ResourceType ==`AWS::EC2::Instance`]|[?LogicalResourceId != `AnsibleController`].ResourceStatus' --output text)
   if [ "$(echo "$STATUS" | grep "CREATE_FAILED")" ]; then exit 1; fi
 done
@@ -428,7 +428,7 @@ done
 echo "Checking volume attachments" >> "$CMDLOG"
 STATUS="status"
 until [ $(echo "$STATUS" | wc -w) = $(echo "$STATUS" | sed 's/CREATE_COMPLETE/CREATE_COMPLETE\n/g' | grep -c "CREATE_COMPLETE") ]; do
-  sleep 1
+  sleep 2
   STATUS=$(aws --no-paginate --region "{{AWSRegion}}" cloudformation describe-stack-resources --stack-name "{{CloudFormationStack}}"  --query 'StackResources[?ResourceType ==`AWS::EC2::VolumeAttachment`].ResourceStatus' --output text)
   [ "$STATUS" = "" ] && STATUS="status"
   if [ "$(echo "$STATUS" | grep "CREATE_FAILED")" ]; then exit 1; fi
@@ -537,6 +537,12 @@ configure_self_signed_cert
 
 seed_known_hosts_file
 
+# versent
+export ANSIBLE_LOG_PATH="$LOGDIR/deployment-pre.log"
+ansible-playbook /tmp/yum.conf.proxy.yml -e "proxy=${HTTPS_PROXY}" \
+                                          -i /tmp/inventory.head
+# /versent
+
 #
 # pre deployment
 #
@@ -614,7 +620,10 @@ aws s3 cp s3://{{DeploymentDataLocation}} ~/deployment-data/SAS_Viya_deployment_
 # build playbook
 echo " " >> "$CMDLOG"
 echo "$(date) Build ansible playbook tar file" >> "$CMDLOG"
-$ORCHCLIPREFIX/sas-orchestration build --input  ~/deployment-data/SAS_Viya_deployment_data.zip $MIRROROPT 2>> "$CMDLOG"
+$ORCHCLIPREFIX/sas-orchestration \
+--java-option "-Dhttps.proxyHost=proxy.cloudopsprod.aws.velocityfrequentflyer.internal" \
+--java-option "-Dhttps.proxyPort=3128" \
+build --input  ~/deployment-data/SAS_Viya_deployment_data.zip $MIRROROPT 2>> "$CMDLOG"
 
 # untar playbook
 echo " " >> "$CMDLOG"

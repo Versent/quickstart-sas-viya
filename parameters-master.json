@@ -5,7 +5,7 @@
     },
     {
         "ParameterKey": "CASInstanceType",
-        "ParameterValue": "i3"
+        "ParameterValue": "r4"
     },
     {
         "ParameterKey": "DeploymentDataLocation",

@@ -1865,6 +1865,17 @@ Resources:
               owner: ec2-user
               group: ec2-user
               authentication: S3AccessCreds
+            /tmp/yum.conf.proxy.yml:
+              source: !Sub
+                - https://${QSS3BucketName}.${QSS3Region}.amazonaws.com/${QSS3KeyPrefix}playbooks/yum.conf.proxy.yml
+                - QSS3Region: !If
+                    - GovCloudCondition
+                    - s3-us-gov-west-1
+                    - s3
+              mode: '000444'
+              owner: ec2-user
+              group: ec2-user
+              authentication: S3AccessCreds
             /tmp/openldapfiles.txt:
               source: !Sub
                 - https://${QSS3BucketName}.${QSS3Region}.amazonaws.com/${QSS3KeyPrefix}openldap/files.txt

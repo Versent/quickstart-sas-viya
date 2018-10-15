@@ -5,7 +5,7 @@
     },
     {
         "ParameterKey": "CASInstanceType",
-        "ParameterValue": "i3"
+        "ParameterValue": "r4"
     },
     {
         "ParameterKey": "DeploymentDataLocation",
@@ -42,10 +42,6 @@
     {
         "ParameterKey": "VPCID",
         "ParameterValue": "vpc-67eef503"
-    },
-    {
-        "ParameterKey": "DeploymentMirror",
-        "ParameterValue": "s3://sas-viya-installation/mirror"
     },
     {
         "ParameterKey": "WebIngressLocation",

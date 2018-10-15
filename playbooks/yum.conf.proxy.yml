@@ -1,0 +1,18 @@
+#  Ensure that all hosts have proxy setting configured in /etc/yum.conf. This
+#  makes using a local mirror _more difficult_ as the proxy setting interfere
+#  with local area connection. The proxy variable is expected to come from
+#  outside of this script. One example is to add the options '--extra-vars
+#  "proxy=http://example.com"'' to the command-line.
+#
+- hosts: all
+  become: yes
+  tasks:
+    - name: Ensure yum is configured to use a proxy
+      ini_file:
+        path: /etc/yum.conf
+        section: main
+        option: proxy
+        value: "{{ proxy }}"
+        mode: "0644"
+        backup: yes
+        no_extra_spaces: yes
