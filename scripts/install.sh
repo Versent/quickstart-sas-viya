@@ -512,7 +512,7 @@ while [[ "$ELBNAME"  == "" ]]; do
 done
 
 #
-# Beging Viya software installation
+# Begin Viya software installation
 #
 if [ -z "{{DomainName}}" ]; then
   ID=$(aws --no-paginate --region "{{AWSRegion}}" cloudformation describe-stack-resources --stack-name "{{CloudFormationStack}}" --logical-resource-id ElasticLoadBalancer --query StackResources[*].PhysicalResourceId --output text)
