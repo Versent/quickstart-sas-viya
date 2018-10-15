@@ -1,0 +1,42 @@
+[
+    {
+        "ParameterKey": "AdminIngressLocation",
+        "ParameterValue": "10.0.0.0/8"
+    },
+    {
+        "ParameterKey": "CASInstanceType",
+        "ParameterValue": "i3"
+    },
+    {
+        "ParameterKey": "DeploymentDataLocation",
+        "ParameterValue": "sas-viya-installation/SAS_Viya_deployment_data.zip"
+    },
+    {
+        "ParameterKey": "KeyPairName",
+        "ParameterValue": "vffddev"
+    },
+    {
+        "ParameterKey": "AvailabilityZone",
+        "ParameterValue": "ap-southeast-2a"
+    },
+    {
+        "ParameterKey": "QSS3BucketName",
+        "ParameterValue": "sas-viya-installation"
+    },
+    {
+        "ParameterKey": "QSS3KeyPrefix",
+        "ParameterValue": "quickstart-sas-viya/"
+    },
+    {
+        "ParameterKey": "SASAdminPass",
+        "ParameterValue": "12341234"
+    },
+    {
+        "ParameterKey": "SASUserPass",
+        "ParameterValue": "12341234"
+    },
+    {
+        "ParameterKey": "WebIngressLocation",
+        "ParameterValue": "10.0.0.0/8"
+    }
+]

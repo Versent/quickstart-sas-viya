@@ -1,0 +1,8 @@
+#!/bin/bash
+saml2aws -a inn exec -- aws cloudformation create-stack \
+--stack-name SAS-Viya \
+--capabilities CAPABILITY_IAM \
+--parameters file://parameters-master.json \
+--template-url https://s3-ap-southeast-2.amazonaws.com/sas-viya-installation/quickstart-sas-viya/templates/sas-viya-master.template.yaml \
+--disable-rollback
+
