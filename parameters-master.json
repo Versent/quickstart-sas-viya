@@ -17,7 +17,7 @@
     },
     {
         "ParameterKey": "AvailabilityZone",
-        "ParameterValue": "ap-southeast-2a"
+        "ParameterValue": "ap-southeast-2c"
     },
     {
         "ParameterKey": "QSS3BucketName",
@@ -25,7 +25,7 @@
     },
     {
         "ParameterKey": "QSS3KeyPrefix",
-        "ParameterValue": "quickstart-sas-viya/"
+        "ParameterValue": "quickstart-sas-viya-develop/"
     },
     {
         "ParameterKey": "SASAdminPass",
