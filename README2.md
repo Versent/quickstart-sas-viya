@@ -14,7 +14,6 @@
         export no_proxy=".internal,.sas,.viya.sas,visual,prog,stateful,controller,localhost,169.254.169.254"
         export NO_PROXY=$no_proxy
 EOF
-        sudo chmod +x /etc/profile.d/http_proxy.sh
         . /etc/profile.d/http_proxy.sh
 
 - proxy config in bash shell scripts
