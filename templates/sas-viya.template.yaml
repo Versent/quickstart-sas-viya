@@ -29,6 +29,8 @@ Metadata:
           - VPCID
           - PublicSubnetID
           - PrivateSubnetID
+          - HttpProxyServer
+          - NoProxy
       - Label:
           default: Server DNS Configuration (only required for custom DNS name and SSL)
         Parameters:
@@ -76,6 +78,10 @@ Metadata:
         default: Domain Name
       AWSHostedZoneID:
         default: Route 53 Hosted Zone
+      HttpProxyServer:
+        default: URL to http proxy server
+      NoProxy:
+        default: list of domains
 
 Parameters:
 
@@ -173,6 +179,18 @@ Parameters:
     MinLength: '15'
     MaxLength: '24'
     ConstraintDescription: must be an existing Subnet ID in the current AWS region
+  HttpProxyServer:
+    AllowedPattern: '^https?://[0-9a-zA-Z./-]+:[0-9]+$'
+    ConstraintDescription: 'Must include a scheme (http://) and hostname (example.com) a colon and port (:3128)'
+    Default: ''
+    Description: 'URL of proxy server, including scheme, hostname, and port'
+    Type: String
+  NoProxy:
+    AllowedPattern: '[0-9a-zA-Z,-]+$'
+    ConstraintDescription: 'Only alphanumeric characters supported'
+    Default: ''
+    Description: 'URL of proxy server, including scheme, hostname, and port'
+    Type: String
 
   QSS3BucketName:
     AllowedPattern: ^[0-9a-zA-Z]+([0-9a-zA-Z-]*[0-9a-zA-Z])*$
@@ -364,6 +382,16 @@ Conditions:
   HasSSLCertificate:
     Fn::Not:
     - Condition: NoSSLCertificate
+  HasHttpProxy:
+    Fn::Not:
+      Fn::Equals:
+      - ''
+      - !Ref HttpProxyServer
+  HasNoProxy:
+    Fn::Not:
+      Fn::Equals:
+      - ''
+      - !Ref NoProxy
 
 
 Resources:
@@ -1683,6 +1711,20 @@ Resources:
             - sasprep
         config:
           files:
+            /etc/profile.d/http_proxy.sh:
+              source: !Sub
+                - https://${QSS3BucketName}.${QSS3Region}.amazonaws.com/${QSS3KeyPrefix}playbooks/http_proxy.j2
+                - QSS3Region: !If
+                    - GovCloudCondition
+                    - s3-us-gov-west-1
+                    - s3
+              mode: '000644'
+              owner: root
+              group: root
+              authentication: S3AccessCreds
+              context:
+                HttpProxyServer: !Ref HttpProxyServer
+                NoProxy: !Ref NoProxy
             /tmp/ansiblecontroller_prereqs.sh:
               source: !Sub
                 - https://${QSS3BucketName}.${QSS3Region}.amazonaws.com/${QSS3KeyPrefix}scripts/ansiblecontroller_prereqs.sh

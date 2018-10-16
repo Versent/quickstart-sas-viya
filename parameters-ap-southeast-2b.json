@@ -24,6 +24,14 @@
         "ParameterValue": "subnet-bb9748f2"
     },
     {
+        "ParameterKey": "HttpProxyServer",
+        "ParameterValue": "http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128"
+    },
+    {
+        "ParameterKey": "NoProxy",
+        "ParameterValue": ".internal,.sas,.viya.sas,visual,prog,stateful,controller,localhost,169.254.169.254"
+    },
+    {
         "ParameterKey": "QSS3BucketName",
         "ParameterValue": "sas-viya-installation"
     },
