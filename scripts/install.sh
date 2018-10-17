@@ -42,11 +42,15 @@ export MSGDIR=$HOME/deployment-messages
 mkdir -p "$MSGDIR"
 
 
-#versent
+#versent: set the environment for proxy
 if [ -f /etc/profile.d/http_proxy.sh ]; then
     . /etc/profile.d/http_proxy.sh
 fi
-#/versent
+
+#versent: extract address and port from $http_proxy variable
+http_proxy_port="${HTTP_PROXY##*:}"               #eg 3128
+http_proxy_url="${HTTP_PROXY%:*}"                 #eg http://server.address.internal
+http_proxy_address="${http_proxy_url#http*://}"   #eg server.address.internal
 
 #
 # Create the message file containing the "Starting SAS Viya Deployment" message
@@ -535,13 +539,6 @@ configure_self_signed_cert
 
 seed_known_hosts_file
 
-# versent
-export ANSIBLE_LOG_PATH="$LOGDIR/deployment-pre.log"
-ansible-playbook /tmp/http_proxy.yml -e "HttpProxyServer=${HTTPS_PROXY}" \
-                                          -e "NoProxy=${NO_PROXY}" \
-                                          -i /tmp/inventory.head
-# /versent
-
 #
 # pre deployment
 #
@@ -551,6 +548,10 @@ echo "$(date) Start Pre-Deployment tasks (see deployment-pre.log)" >> "$CMDLOG"
 # set log file for pre deployment steps
 export ANSIBLE_LOG_PATH="$LOGDIR/deployment-pre.log"
 
+# versent: configure access to proxy for shell (ansible) and yum.conf
+ansible-playbook /tmp/http_proxy.yml -e "HttpProxyServer=${HTTPS_PROXY}" \
+                                          -e "NoProxy=${NO_PROXY}" \
+                                          -i /tmp/inventory.head
 # set hostnames, mount drives
 ansible-playbook /tmp/ansible.pre.deployment.yml -e "CloudWatchLogGroup='{{LogGroup}}'" \
                                           -e "AWSRegion='{{AWSRegion}}'" \
@@ -620,8 +621,8 @@ aws s3 cp s3://{{DeploymentDataLocation}} ~/deployment-data/SAS_Viya_deployment_
 echo " " >> "$CMDLOG"
 echo "$(date) Build ansible playbook tar file" >> "$CMDLOG"
 $ORCHCLIPREFIX/sas-orchestration \
---java-option "-Dhttps.proxyHost=proxy.cloudopsprod.aws.velocityfrequentflyer.internal" \
---java-option "-Dhttps.proxyPort=3128" \
+--java-option "-Dhttps.proxyHost=${http_proxy_address}" \
+--java-option "-Dhttps.proxyPort=${http_proxy_port}" \
 build --input  ~/deployment-data/SAS_Viya_deployment_data.zip $MIRROROPT 2>> "$CMDLOG"
 
 # untar playbook
