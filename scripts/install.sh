@@ -552,6 +552,9 @@ export ANSIBLE_LOG_PATH="$LOGDIR/deployment-pre.log"
 ansible-playbook /tmp/http_proxy.yml -e "HttpProxyServer=${HTTPS_PROXY}" \
                                           -e "NoProxy=${NO_PROXY}" \
                                           -i /tmp/inventory.head
+# versent: ensure keepcache is enabled in yum.conf
+ansible-playbook /tmp/yum.conf.keepcache.yml -i /tmp/inventory.head
+
 # set hostnames, mount drives
 ansible-playbook /tmp/ansible.pre.deployment.yml -e "CloudWatchLogGroup='{{LogGroup}}'" \
                                           -e "AWSRegion='{{AWSRegion}}'" \

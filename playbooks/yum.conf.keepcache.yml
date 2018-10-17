@@ -1,0 +1,13 @@
+# turn on keepcache in yum.conf
+- hosts: all
+  become: yes
+  task:
+    - name: Turn on yum cacheing
+      ini_file:
+        path: /etc/yum.conf
+        section: main
+        option: keepcache
+        value: '1'
+        mode: '0644'
+        backup: yes
+        no_extra_spaces: yes
