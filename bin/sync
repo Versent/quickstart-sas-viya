@@ -1,1 +1,8 @@
-aws --profile velocity-data-nonprod s3 sync --exclude "*.git/*" --exclude "log*" --exclude "innovation/*" . s3://sas-viya-installation/quickstart-sas-viya/
+#!/bin/bash
+#aws --profile velocity-data-nonprod \
+saml2aws -a velodnp exec -- aws \
+s3 sync . s3://sas-viya-installation/quickstart-sas-viya/ \
+--exclude \"*.git/*\" \
+--exclude \"log*\" \
+--exclude \"deployment-log*\" \
+--exclude \"innovation/*\"
