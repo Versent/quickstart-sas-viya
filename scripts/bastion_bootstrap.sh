@@ -615,6 +615,7 @@ else
 fi
 
 prevent_process_snooping
+# versent: do not acquire public IP address
 # request_eip
 
 echo "Bootstrap complete."
