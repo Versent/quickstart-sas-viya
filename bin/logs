@@ -1,4 +1,3 @@
+#!/bin/bash
 cp -a log/ ./log-$(date +%FT%T)
-cp -a deployment-logs/ ./deployment-logs-$(date +%FT%T)
-scp -r ansible:/var/log .
-scp -r ansible:deployment-logs .
+scp -r $1:deployment-logs $1:/var/log log/
