@@ -180,16 +180,16 @@ Parameters:
     MaxLength: '24'
     ConstraintDescription: must be an existing Subnet ID in the current AWS region
   HttpProxyServer:
-    AllowedPattern: '^https?://[0-9a-zA-Z./-]+:[0-9]+$'
-    ConstraintDescription: 'Must include a scheme (http://) and hostname (example.com) a colon and port (:3128)'
+    # AllowedPattern: "https://[0-9a-zA-Z.-]+:[0-9]+"
+    # ConstraintDescription: 'Must include a scheme (http://), a hostname (example.com) a colon and port (:3128)'
     Default: ''
     Description: 'URL of proxy server, including scheme, hostname, and port'
     Type: String
   NoProxy:
-    AllowedPattern: '[0-9a-zA-Z,-]+$'
-    ConstraintDescription: 'Only alphanumeric characters supported'
+    # AllowedPattern: '[0-9a-zA-Z.,-]+'
+    # ConstraintDescription: 'Only alphanumeric characters supported'
     Default: ''
-    Description: 'URL of proxy server, including scheme, hostname, and port'
+    Description: 'Comma-separated list of domain names to exclude from proxy'
     Type: String
 
   QSS3BucketName:
@@ -384,12 +384,12 @@ Conditions:
     - Condition: NoSSLCertificate
   HasHttpProxy:
     Fn::Not:
-      Fn::Equals:
+    - Fn::Equals:
       - ''
       - !Ref HttpProxyServer
   HasNoProxy:
     Fn::Not:
-      Fn::Equals:
+    - Fn::Equals:
       - ''
       - !Ref NoProxy
 
@@ -1107,6 +1107,22 @@ Resources:
         configSets:
           quickstart:
             - install
+        config:
+          files:
+            /etc/profile.d/http_proxy.sh:
+              source: !Sub
+                - https://${QSS3BucketName}.${QSS3Region}.amazonaws.com/${QSS3KeyPrefix}playbooks/http_proxy.j2
+                - QSS3Region: !If
+                    - GovCloudCondition
+                    - s3-us-gov-west-1
+                    - s3
+              mode: '000644'
+              owner: root
+              group: root
+              authentication: S3AccessCreds
+              context:
+                HttpProxyServer: !Ref HttpProxyServer
+                NoProxy: !Ref NoProxy
         install:
           commands:
             01-getkey:
@@ -1200,6 +1216,22 @@ Resources:
         configSets:
           quickstart:
             - install
+        config:
+          files:
+            /etc/profile.d/http_proxy.sh:
+              source: !Sub
+                - https://${QSS3BucketName}.${QSS3Region}.amazonaws.com/${QSS3KeyPrefix}playbooks/http_proxy.j2
+                - QSS3Region: !If
+                    - GovCloudCondition
+                    - s3-us-gov-west-1
+                    - s3
+              mode: '000644'
+              owner: root
+              group: root
+              authentication: S3AccessCreds
+              context:
+                HttpProxyServer: !Ref HttpProxyServer
+                NoProxy: !Ref NoProxy
         install:
           commands:
             01-getkey:
@@ -1294,6 +1326,22 @@ Resources:
         configSets:
           quickstart:
             - install
+        config:
+          files:
+            /etc/profile.d/http_proxy.sh:
+              source: !Sub
+                - https://${QSS3BucketName}.${QSS3Region}.amazonaws.com/${QSS3KeyPrefix}playbooks/http_proxy.j2
+                - QSS3Region: !If
+                    - GovCloudCondition
+                    - s3-us-gov-west-1
+                    - s3
+              mode: '000644'
+              owner: root
+              group: root
+              authentication: S3AccessCreds
+              context:
+                HttpProxyServer: !Ref HttpProxyServer
+                NoProxy: !Ref NoProxy
         install:
           commands:
             01-getkey:
@@ -1389,6 +1437,22 @@ Resources:
         configSets:
           quickstart:
             - install
+        config:
+          files:
+            /etc/profile.d/http_proxy.sh:
+              source: !Sub
+                - https://${QSS3BucketName}.${QSS3Region}.amazonaws.com/${QSS3KeyPrefix}playbooks/http_proxy.j2
+                - QSS3Region: !If
+                    - GovCloudCondition
+                    - s3-us-gov-west-1
+                    - s3
+              mode: '000644'
+              owner: root
+              group: root
+              authentication: S3AccessCreds
+              context:
+                HttpProxyServer: !Ref HttpProxyServer
+                NoProxy: !Ref NoProxy
         install:
           commands:
             01-getkey:
@@ -1907,9 +1971,9 @@ Resources:
               owner: ec2-user
               group: ec2-user
               authentication: S3AccessCreds
-            /tmp/yum.conf.proxy.yml:
+            /tmp/http_proxy.yml:
               source: !Sub
-                - https://${QSS3BucketName}.${QSS3Region}.amazonaws.com/${QSS3KeyPrefix}playbooks/yum.conf.proxy.yml
+                - https://${QSS3BucketName}.${QSS3Region}.amazonaws.com/${QSS3KeyPrefix}playbooks/http_proxy.yml
                 - QSS3Region: !If
                     - GovCloudCondition
                     - s3-us-gov-west-1

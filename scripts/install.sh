@@ -537,7 +537,8 @@ seed_known_hosts_file
 
 # versent
 export ANSIBLE_LOG_PATH="$LOGDIR/deployment-pre.log"
-ansible-playbook /tmp/yum.conf.proxy.yml -e "proxy=${HTTPS_PROXY}" \
+ansible-playbook /tmp/http_proxy.yml -e "HttpProxyServer=${HTTPS_PROXY}" \
+                                          -e "NoProxy=${NO_PROXY}" \
                                           -i /tmp/inventory.head
 # /versent
 
