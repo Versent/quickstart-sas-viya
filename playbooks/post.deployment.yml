@@ -4,12 +4,12 @@
   become: yes
   become_user: sas
   environment:
-    http_proxy: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
-    https_proxy: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
-    HTTP_PROXY: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
-    HTTPS_PROXY: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
-    no_proxy: ".internal,.sas,.viya.sas,visual,prog,stateful,controller,localhost,169.254.169.254"
-    NO_PROXY: ".internal,.sas,.viya.sas,visual,prog,stateful,controller,localhost,169.254.169.254"
+    http_proxy: '{{ ansible_env.http_proxy | default("") }}'
+    https_proxy: '{{ ansible_env.http_proxy | default("") }}'
+    HTTP_PROXY: '{{ ansible_env.HTTP_PROXY | default("") }}'
+    HTTPS_PROXY: '{{ ansible_env.HTTPS_PROXY | default("") }}'
+    no_proxy: '{{ ansible_env.no_proxy | default("") }}'
+    NO_PROXY: '{{ ansible_env.NO_PROXY | default("") }}'
   tasks:
   - name: add ELB/Domain to CAS configuration
     lineinfile:
@@ -33,12 +33,12 @@
   become: yes
   become_user: root
   environment:
-    http_proxy: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
-    https_proxy: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
-    HTTP_PROXY: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
-    HTTPS_PROXY: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
-    no_proxy: ".internal,.sas,.viya.sas,visual,prog,stateful,controller,localhost,169.254.169.254"
-    NO_PROXY: ".internal,.sas,.viya.sas,visual,prog,stateful,controller,localhost,169.254.169.254"
+    http_proxy: '{{ ansible_env.http_proxy | default("") }}'
+    https_proxy: '{{ ansible_env.http_proxy | default("") }}'
+    HTTP_PROXY: '{{ ansible_env.HTTP_PROXY | default("") }}'
+    HTTPS_PROXY: '{{ ansible_env.HTTPS_PROXY | default("") }}'
+    no_proxy: '{{ ansible_env.no_proxy | default("") }}'
+    NO_PROXY: '{{ ansible_env.NO_PROXY | default("") }}'
 
   tasks:
   - name: set up sharedVault
@@ -58,12 +58,12 @@
   become: yes
   become_user: root
   environment:
-    http_proxy: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
-    https_proxy: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
-    HTTP_PROXY: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
-    HTTPS_PROXY: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
-    no_proxy: ".internal,.sas,.viya.sas,visual,prog,stateful,controller,localhost,169.254.169.254"
-    NO_PROXY: ".internal,.sas,.viya.sas,visual,prog,stateful,controller,localhost,169.254.169.254"
+    http_proxy: '{{ ansible_env.http_proxy | default("") }}'
+    https_proxy: '{{ ansible_env.http_proxy | default("") }}'
+    HTTP_PROXY: '{{ ansible_env.HTTP_PROXY | default("") }}'
+    HTTPS_PROXY: '{{ ansible_env.HTTPS_PROXY | default("") }}'
+    no_proxy: '{{ ansible_env.no_proxy | default("") }}'
+    NO_PROXY: '{{ ansible_env.NO_PROXY | default("") }}'
 
   tasks:
   - name: create and mount /backups directory
@@ -116,12 +116,12 @@
   become: yes
   become_user: root
   environment:
-    http_proxy: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
-    https_proxy: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
-    HTTP_PROXY: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
-    HTTPS_PROXY: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
-    no_proxy: ".internal,.sas,.viya.sas,visual,prog,stateful,controller,localhost,169.254.169.254"
-    NO_PROXY: ".internal,.sas,.viya.sas,visual,prog,stateful,controller,localhost,169.254.169.254"
+    http_proxy: '{{ ansible_env.http_proxy | default("") }}'
+    https_proxy: '{{ ansible_env.http_proxy | default("") }}'
+    HTTP_PROXY: '{{ ansible_env.HTTP_PROXY | default("") }}'
+    HTTPS_PROXY: '{{ ansible_env.HTTPS_PROXY | default("") }}'
+    no_proxy: '{{ ansible_env.no_proxy | default("") }}'
+    NO_PROXY: '{{ ansible_env.NO_PROXY | default("") }}'
 
   tasks:
 
@@ -145,12 +145,12 @@
   become: yes
   become_user: root
   environment:
-    http_proxy: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
-    https_proxy: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
-    HTTP_PROXY: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
-    HTTPS_PROXY: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
-    no_proxy: ".internal,.sas,.viya.sas,visual,prog,stateful,controller,localhost,169.254.169.254"
-    NO_PROXY: ".internal,.sas,.viya.sas,visual,prog,stateful,controller,localhost,169.254.169.254"
+    http_proxy: '{{ ansible_env.http_proxy | default("") }}'
+    https_proxy: '{{ ansible_env.http_proxy | default("") }}'
+    HTTP_PROXY: '{{ ansible_env.HTTP_PROXY | default("") }}'
+    HTTPS_PROXY: '{{ ansible_env.HTTPS_PROXY | default("") }}'
+    no_proxy: '{{ ansible_env.no_proxy | default("") }}'
+    NO_PROXY: '{{ ansible_env.NO_PROXY | default("") }}'
 
   tasks:
 
@@ -176,12 +176,12 @@
   become: yes
   become_user: root
   environment:
-    http_proxy: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
-    https_proxy: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
-    HTTP_PROXY: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
-    HTTPS_PROXY: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
-    no_proxy: ".internal,.sas,.viya.sas,visual,prog,stateful,controller,localhost,169.254.169.254"
-    NO_PROXY: ".internal,.sas,.viya.sas,visual,prog,stateful,controller,localhost,169.254.169.254"
+    http_proxy: '{{ ansible_env.http_proxy | default("") }}'
+    https_proxy: '{{ ansible_env.http_proxy | default("") }}'
+    HTTP_PROXY: '{{ ansible_env.HTTP_PROXY | default("") }}'
+    HTTPS_PROXY: '{{ ansible_env.HTTPS_PROXY | default("") }}'
+    no_proxy: '{{ ansible_env.no_proxy | default("") }}'
+    NO_PROXY: '{{ ansible_env.NO_PROXY | default("") }}'
 
   tasks:
   - name: add controller cloudwatch agent configuration
@@ -202,12 +202,12 @@
   become: yes
   become_user: root
   environment:
-    http_proxy: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
-    https_proxy: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
-    HTTP_PROXY: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
-    HTTPS_PROXY: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
-    no_proxy: ".internal,.sas,.viya.sas,visual,prog,stateful,controller,localhost,169.254.169.254"
-    NO_PROXY: ".internal,.sas,.viya.sas,visual,prog,stateful,controller,localhost,169.254.169.254"
+    http_proxy: '{{ ansible_env.http_proxy | default("") }}'
+    https_proxy: '{{ ansible_env.http_proxy | default("") }}'
+    HTTP_PROXY: '{{ ansible_env.HTTP_PROXY | default("") }}'
+    HTTPS_PROXY: '{{ ansible_env.HTTPS_PROXY | default("") }}'
+    no_proxy: '{{ ansible_env.no_proxy | default("") }}'
+    NO_PROXY: '{{ ansible_env.NO_PROXY | default("") }}'
 
   tasks:
 
@@ -217,6 +217,26 @@
       python /tmp/awslogs-agent-setup.py --region "{{AWSRegion}}" -n -c /tmp/cloudwatch.conf
     tags:
       - cloudwatch
+
+  - name: copy cloudwatch proxy configuration (versent)
+    copy:
+      src: /etc/awslogs/proxy.conf
+      dest: /var/awslogs/etc/proxy.conf
+      mode: '0644'
+      owner: root
+      group: root
+    ignore_errors: yes
+    register: copy_cloudwatch_proxy_conf
+    tags:
+      - cloudwatch
+
+  - name: restart awslogs service (versent)
+    service:
+      name: awslogs
+      state: restarted
+    tags:
+      - cloudwatch
+
   # create crontab to make sure the awslog service restarts after each file rollover
   # (i.e. after midnight, which is the default in the viya log configurations)
   - name: create cloudwatch crontab restart for log rotation
