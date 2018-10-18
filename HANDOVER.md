@@ -8,6 +8,12 @@
     - [Ansible Controller](#ansible-controller)
         - [Visual, Prog, Controller, and Stateful](#visual-prog-controller-and-stateful)
     - [Proxy Settings](#proxy-settings)
+    - [Local Development](#local-development)
+        - [Authentication](#authentication)
+        - [Copy files to s3](#copy-files-to-s3)
+        - [Copy the parameters](#copy-the-parameters)
+        - [Create CloudFormation Stack](#create-cloudformation-stack)
+        - [Download log files from server for local analysis](#download-log-files-from-server-for-local-analysis)
 ## Repository
 
 A GitHub repository (fork) of the AWS SAS Viya Quick Start Guide exists at this URL:  ____?
@@ -25,11 +31,11 @@ A bucket was created in Sydney region called "sas-viya-installation". Inside the
 
 The `datatestnonprod` VPC was selected for SAS installation. It's CIDR block is 10.113.192.0/19. The Ansible controller runs in the Public subnet of a single AZ. The other instances run in the Private subnet of a single AZ. The CIDR blocks are as follows:
 
-| ITEM      | CIDR BLOCK      |
+| ITEM | CIDR BLOCK |
 | --------- | --------------- |
-| VPC       | 10.113.192.0/19 |
-| public A  | 10.113.192.0/22 |
-| public B  | 10.113.196.0/22 |
+| VPC | 10.113.192.0/19 |
+| public A | 10.113.192.0/22 |
+| public B | 10.113.196.0/22 |
 | private A | 10.113.200.0/22 |
 | private B | 10.113.204.0/22 |
 
@@ -65,3 +71,31 @@ The VPC has no Internet Gateway (IGW) and therefore has not inbound, or outbound
     export NO_PROXY=$no_proxy
 
 The proxy settings are provided as parameters to the CloudFormation template. You can find a shell script under `/etc/profile.d/http_proxy.conf`. `/etc/yum.conf` has also been updated with proxy configuration.
+
+## Local Development
+
+### Authentication
+
+Use the venerable `saml2aws` to log into AWS environment using the Command-line interface. Temporary (1 hour) credentials are stored in `~/.aws/credentials`. You will need to ask VA IT for AD credentials for `saml2aws` to work.
+
+### Copy files to s3
+Once authenticated, you sync all changes to the S3 bucket `sas-viya-installation` in `ap-southeast-2` region.
+
+`bin/sync`
+
+### Copy the parameters
+
+Copy one of the `parameters-ap-southeast-2a.json` or `parameters-ap-southeast-2b.json` files to `parameters.json`.
+
+### Create CloudFormation Stack
+Create the CloudFormation stack with this command:
+
+`bin/cfn <optional-string>`
+
+The optional string is appended to the stack name `SAS-Viya`. `-test` will result in the stack name of `SAS-Viya-test`.
+
+### Download log files from server for local analysis
+
+In the event of an error, you can download the logs from `~ec2-user/deployment-logs` and `/var/log` to a local directory `log`
+
+`bin/logs`
