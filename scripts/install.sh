@@ -45,12 +45,11 @@ mkdir -p "$MSGDIR"
 #versent: set the environment for proxy
 if [ -f /etc/profile.d/http_proxy.sh ]; then
     . /etc/profile.d/http_proxy.sh
+    #versent: extract address and port from $http_proxy variable
+    http_proxy_port="${HTTP_PROXY##*:}"               #eg 3128
+    http_proxy_url="${HTTP_PROXY%:*}"                 #eg http://server.address.internal
+    http_proxy_address="${http_proxy_url#http*://}"   #eg server.address.internal
 fi
-
-#versent: extract address and port from $http_proxy variable
-http_proxy_port="${HTTP_PROXY##*:}"               #eg 3128
-http_proxy_url="${HTTP_PROXY%:*}"                 #eg http://server.address.internal
-http_proxy_address="${http_proxy_url#http*://}"   #eg server.address.internal
 
 #
 # Create the message file containing the "Starting SAS Viya Deployment" message
