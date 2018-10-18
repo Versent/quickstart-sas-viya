@@ -1,7 +1,7 @@
 # turn on keepcache in yum.conf
 - hosts: all
   become: yes
-  task:
+  tasks:
     - name: Turn on yum cacheing
       ini_file:
         path: /etc/yum.conf
