@@ -1129,9 +1129,12 @@ Resources:
               command:
                 Fn::Sub: |
                   #!/bin/bash
-                  if [ -f /etc/profile.d/http_proxy.sh ]; then
-                      . /etc/profile.d/http_proxy.sh
-                  fi
+                  export http_proxy="${HttpProxyServer}"
+                  export https_proxy="${HttpProxyServer}"
+                  export HTTP_PROXY="${HttpProxyServer}"
+                  export HTTPS_PROXY="${HttpProxyServer}"
+                  export no_proxy="${NoProxy}"
+                  export NO_PROXY="${NoProxy}"
                   KEY=dummy
                   # wait until the key is available (the ansible controller puts it there)
                   TRIES=0
@@ -1182,9 +1185,12 @@ Resources:
         Fn::Base64:
           Fn::Sub: |
             #!/bin/bash
-            if [ -f /etc/profile.d/http_proxy.sh ]; then
-                . /etc/profile.d/http_proxy.sh
-            fi
+            export http_proxy="${HttpProxyServer}"
+            export https_proxy="${HttpProxyServer}"
+            export HTTP_PROXY="${HttpProxyServer}"
+            export HTTPS_PROXY="${HttpProxyServer}"
+            export no_proxy="${NoProxy}"
+            export NO_PROXY="${NoProxy}"
             export PATH=$PATH:/usr/local/bin
             curl -O https://bootstrap.pypa.io/get-pip.py && python get-pip.py &> /dev/null
             pip install awscli --ignore-installed six &> /dev/null
@@ -1232,9 +1238,12 @@ Resources:
               command:
                 Fn::Sub: |
                   #!/bin/bash
-                  if [ -f /etc/profile.d/http_proxy.sh ]; then
-                      . /etc/profile.d/http_proxy.sh
-                  fi
+                  export http_proxy="${HttpProxyServer}"
+                  export https_proxy="${HttpProxyServer}"
+                  export HTTP_PROXY="${HttpProxyServer}"
+                  export HTTPS_PROXY="${HttpProxyServer}"
+                  export no_proxy="${NoProxy}"
+                  export NO_PROXY="${NoProxy}"
                   KEY=dummy
                   # wait until the key is available (the ansible controller puts it there)
                   TRIES=0
@@ -1286,9 +1295,12 @@ Resources:
         Fn::Base64:
           Fn::Sub: |
             #!/bin/bash
-            if [ -f /etc/profile.d/http_proxy.sh ]; then
-                . /etc/profile.d/http_proxy.sh
-            fi
+            export http_proxy="${HttpProxyServer}"
+            export https_proxy="${HttpProxyServer}"
+            export HTTP_PROXY="${HttpProxyServer}"
+            export HTTPS_PROXY="${HttpProxyServer}"
+            export no_proxy="${NoProxy}"
+            export NO_PROXY="${NoProxy}"
             export PATH=$PATH:/usr/local/bin
             curl -O https://bootstrap.pypa.io/get-pip.py && python get-pip.py &> /dev/null
             pip install awscli --ignore-installed six &> /dev/null
@@ -1336,9 +1348,12 @@ Resources:
               command:
                 Fn::Sub: |
                   #!/bin/bash
-                  if [ -f /etc/profile.d/http_proxy.sh ]; then
-                      . /etc/profile.d/http_proxy.sh
-                  fi
+                  export http_proxy="${HttpProxyServer}"
+                  export https_proxy="${HttpProxyServer}"
+                  export HTTP_PROXY="${HttpProxyServer}"
+                  export HTTPS_PROXY="${HttpProxyServer}"
+                  export no_proxy="${NoProxy}"
+                  export NO_PROXY="${NoProxy}"
                   KEY=dummy
                   # wait until the key is available (the ansible controller puts it there)
                   TRIES=0
@@ -1389,9 +1404,12 @@ Resources:
         Fn::Base64:
           Fn::Sub: |
             #!/bin/bash
-            if [ -f /etc/profile.d/http_proxy.sh ]; then
-                . /etc/profile.d/http_proxy.sh
-            fi
+            export http_proxy="${HttpProxyServer}"
+            export https_proxy="${HttpProxyServer}"
+            export HTTP_PROXY="${HttpProxyServer}"
+            export HTTPS_PROXY="${HttpProxyServer}"
+            export no_proxy="${NoProxy}"
+            export NO_PROXY="${NoProxy}"
             export PATH=$PATH:/usr/local/bin
             curl -O https://bootstrap.pypa.io/get-pip.py && python get-pip.py &> /dev/null
             pip install awscli --ignore-installed six &> /dev/null
@@ -1441,9 +1459,12 @@ Resources:
               command:
                 Fn::Sub: |
                   #!/bin/bash
-                  if [ -f /etc/profile.d/http_proxy.sh ]; then
-                      . /etc/profile.d/http_proxy.sh
-                  fi
+                  export http_proxy="${HttpProxyServer}"
+                  export https_proxy="${HttpProxyServer}"
+                  export HTTP_PROXY="${HttpProxyServer}"
+                  export HTTPS_PROXY="${HttpProxyServer}"
+                  export no_proxy="${NoProxy}"
+                  export NO_PROXY="${NoProxy}"
                   KEY=dummy
                   # wait until the key is available (the ansible controller puts it there)
                   TRIES=0
@@ -1487,9 +1508,12 @@ Resources:
         Fn::Base64:
           Fn::Sub: |
             #!/bin/bash
-            if [ -f /etc/profile.d/http_proxy.sh ]; then
-                . /etc/profile.d/http_proxy.sh
-            fi
+            export http_proxy="${HttpProxyServer}"
+            export https_proxy="${HttpProxyServer}"
+            export HTTP_PROXY="${HttpProxyServer}"
+            export HTTPS_PROXY="${HttpProxyServer}"
+            export no_proxy="${NoProxy}"
+            export NO_PROXY="${NoProxy}"
             export PATH=$PATH:/usr/local/bin
             curl -O https://bootstrap.pypa.io/get-pip.py && python get-pip.py &> /dev/null
             pip install awscli --ignore-installed six &> /dev/null
@@ -1726,10 +1750,6 @@ Resources:
       Roles:
         - !Ref AnsibleControllerRole
       Path: /
-  AnsibleControllerEIP:
-    Type: AWS::EC2::EIP
-    Properties:
-      Domain: vpc
   AnsibleController:
     Type: AWS::EC2::Instance
     CreationPolicy:
@@ -1831,7 +1851,7 @@ Resources:
                 SNSTopic: !If [SNSCondition, !Ref SNSTopic, ""]
                 AWSRegion: !Ref AWS::Region
                 KeyPairName: !Ref KeyPairName
-                AnsibleControllerIP: '' #!Ref AnsibleControllerEIP
+                AnsibleControllerIP: ''
                 NumWorkers: !GetAtt LicenseInfo.NumWorkers
                 CloudFormationStack: !Ref AWS::StackName
                 CloudWatchLogs: !Sub "https://console.aws.amazon.com/cloudwatch/home?region=${AWS::Region}#logStream:group=${CloudWatchLogGroup}"
@@ -2007,12 +2027,12 @@ Resources:
         Fn::Base64:
           Fn::Sub: |
             #!/bin/bash
-            export http_proxy="http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128"
-            export https_proxy=$http_proxy
-            export HTTP_PROXY=$http_proxy
-            export HTTPS_PROXY=$http_proxy
-            export no_proxy=".internal,.sas,.viya.sas,visual,prog,stateful,controller,localhost,169.254.169.254"
-            export NO_PROXY=$no_proxy
+            export http_proxy="${HttpProxyServer}"
+            export https_proxy="${HttpProxyServer}"
+            export HTTP_PROXY="${HttpProxyServer}"
+            export HTTPS_PROXY="${HttpProxyServer}"
+            export no_proxy="${NoProxy}"
+            export NO_PROXY="${NoProxy}"
             export PATH=$PATH:/usr/local/bin:/opt/aws/bin
             pip install awscli --ignore-installed six &> /dev/null
             # remove pre-installed cfn bootstrap utilities
@@ -2021,7 +2041,6 @@ Resources:
             # install latest cfn bootstrap utilities
             easy_install https://s3.amazonaws.com/cloudformation-examples/aws-cfn-bootstrap-latest.tar.gz
             CLOUDWATCHGROUP=${CloudWatchLogGroup}
-            EIP_LIST=${AnsibleControllerEIP}
             cfn-init --stack ${AWS::StackName} --resource AnsibleController --configsets quickstart --region ${AWS::Region}
             # Signal the status from cfn-init
             cfn-signal -e $? --stack ${AWS::StackName} --resource AnsibleController --region ${AWS::Region}
@@ -2051,9 +2070,6 @@ Outputs:
             - ElasticLoadBalancer
             - DNSName
         - !GetAtt LicenseInfo.SASStudioPath
-  AnsibleControllerIP:
-    Description: Ansible Controller IP address
-    Value: !Ref AnsibleControllerEIP
   CloudWatchLogs:
     Description: CloudWatch Logs.
     # e.g.     https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#logStream:group=qs-viya-CloudWatchLogGroup-1KIGMD9DKO4RH
