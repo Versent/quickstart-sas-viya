@@ -652,6 +652,9 @@ pushd sas_viya_playbook
   popd
   ansible-playbook virk/playbooks/pre-install-playbook/viya_pre_install_playbook.yml --skip-tags skipmemfail,skipcoresfail,skipstoragefail,skipnicssfail,bandwidth -e 'use_pause=false'
 
+  #versent: exit before main SAS installation
+  exit $?
+
   if [ -n "$USERPASS" ]; then
     echo " " >> "$CMDLOG"
     echo "$(date) Install and set up OpenLDAP (see deployment-openldap.log)" >> "$CMDLOG"
