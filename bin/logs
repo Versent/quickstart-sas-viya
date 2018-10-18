@@ -1,3 +1,4 @@
 #!/bin/bash
-cp -a log/ ./log-$(date +%FT%T)
-scp -r $1:deployment-logs $1:/var/log log/
+mv -v log log-$(date +%s)
+mkdir -p log
+scp -r ${1?}:deployment-logs ${1?}:/var/log log/
