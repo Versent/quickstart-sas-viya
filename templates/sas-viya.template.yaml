@@ -864,6 +864,9 @@ Resources:
   ViyaPlacementGroup:
     Type: AWS::EC2::PlacementGroup
 
+  i3PlacementGroup:
+    Type: AWS::EC2::PlacementGroup
+
   ELBSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
@@ -1270,18 +1273,20 @@ Resources:
         - RHEL74HVM
       SubnetId: !Ref PrivateSubnetID
       IamInstanceProfile: !Ref ViyaProfile
-      InstanceType: r4.2xlarge
+      InstanceType: i3.8xlarge # instance storage: 4 x 1,900 GB (7.6TB)
       EbsOptimized: true
-      PlacementGroupName: !Ref ViyaPlacementGroup
+      PlacementGroupName: !Ref i3PlacementGroup
       BlockDeviceMappings:
+        # / 100G , and /var/log/sas 50G
         - DeviceName: /dev/sda1
           Ebs:
-            VolumeSize: '30'
+            VolumeSize: '200'
             VolumeType: gp2
             DeleteOnTermination: true
+        # /opt/sas 100G
         - DeviceName: /dev/sdg
           Ebs:
-            VolumeSize: '50'
+            VolumeSize: '100'
             VolumeType: gp2
             DeleteOnTermination: true
             Encrypted: true
@@ -1383,14 +1388,16 @@ Resources:
       EbsOptimized: true
       PlacementGroupName: !Ref ViyaPlacementGroup
       BlockDeviceMappings:
+        # / 100G, and /var/log/sas 50G
         - DeviceName: /dev/sda1
           Ebs:
-            VolumeSize: '30'
+            VolumeSize: '200'
             VolumeType: gp2
             DeleteOnTermination: true
+        # /opt/sas 100G
         - DeviceName: /dev/sdg
           Ebs:
-            VolumeSize: '50'
+            VolumeSize: '100'
             VolumeType: gp2
             DeleteOnTermination: true
             Encrypted: true
@@ -1497,7 +1504,14 @@ Resources:
         - - !Ref CASInstanceType
           - !GetAtt LicenseInfo.NodeInstanceSize
       EbsOptimized: true
-      PlacementGroupName: !Ref ViyaPlacementGroup
+      PlacementGroupName: !Ref i3PlacementGroup
+      BlockDeviceMappings:
+        # / 100G, and /var/log/sas 50G
+        - DeviceName: /dev/sda1
+          Ebs:
+            VolumeSize: '200'
+            VolumeType: gp2
+            DeleteOnTermination: true
       SecurityGroupIds:
         - !Ref ViyaSecurityGroup
 
@@ -1523,17 +1537,17 @@ Resources:
             cfn-signal -e $? --stack ${AWS::StackName} --resource CASController --region ${AWS::Region}
 
 
+  # /opt/sas 100G
   CASViyaVolume:
     Type: AWS::EC2::Volume
     Properties:
-      Size: 50
+      Size: 100
       VolumeType: gp2
       Encrypted: true
       AvailabilityZone: !GetAtt CASController.AvailabilityZone
       Tags:
         - Key: Name
           Value: !Sub ${AWS::StackName} CAS Controller Viya Install
-
   CASViyaAttachment:
     Type: AWS::EC2::VolumeAttachment
     Properties:
@@ -1541,7 +1555,7 @@ Resources:
       InstanceId: !Ref CASController
       VolumeId: !Ref CASViyaVolume
 
-
+  # 1000G /opt/sas/viya/config/data/cas
   CASLibVolume:
     Type: AWS::EC2::Volume
     Properties:
@@ -1552,7 +1566,6 @@ Resources:
       Tags:
         - Key: Name
           Value: !Sub ${AWS::StackName} CAS Controller CASLib
-
   CASLibAttachment:
     Type: AWS::EC2::VolumeAttachment
     Properties:
@@ -1560,7 +1573,7 @@ Resources:
       InstanceId: !Ref CASController
       VolumeId: !Ref CASLibVolume
 
-
+  # 720G /sastmp
   CASCacheVolume:
     Condition: IsNotI3
     Type: AWS::EC2::Volume
@@ -1572,7 +1585,6 @@ Resources:
       Tags:
         - Key: Name
           Value: !Sub ${AWS::StackName} CAS Controller CAS Cache
-
   CASCacheAttachment:
     Condition: IsNotI3
     Type: AWS::EC2::VolumeAttachment
@@ -1580,6 +1592,7 @@ Resources:
       Device: /dev/sdd
       InstanceId: !Ref CASController
       VolumeId: !Ref CASCacheVolume
+
 
   AnsiblePublicKey:
     Type: AWS::SSM::Parameter
