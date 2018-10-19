@@ -862,10 +862,7 @@ Resources:
           Ref: CASController
 
 
-  r4PlacementGroup:
-    Type: AWS::EC2::PlacementGroup
-
-  i3PlacementGroup:
+  ViyaPlacementGroup:
     Type: AWS::EC2::PlacementGroup
 
   ELBSecurityGroup:
@@ -1166,7 +1163,7 @@ Resources:
       IamInstanceProfile: !Ref ViyaProfile
       InstanceType: r4.4xlarge
       EbsOptimized: true
-      # PlacementGroupName: !Ref r4PlacementGroup
+      PlacementGroupName: !Ref ViyaPlacementGroup
       BlockDeviceMappings:
         # / 100G , and /var/log/sas 50G
         - DeviceName: /dev/sda1
@@ -1278,7 +1275,7 @@ Resources:
       IamInstanceProfile: !Ref ViyaProfile
       InstanceType: !Sub "${CASInstanceType}.8xlarge" # i3 instance storage: 4 x 1,900 GB (7.6TB)
       EbsOptimized: true
-      # PlacementGroupName: !Sub "${CASInstanceType}PlacementGroup"
+      PlacementGroupName: !Ref ViyaPlacementGroup
       BlockDeviceMappings:
         # / 100G , and /var/log/sas 50G
         - DeviceName: /dev/sda1
@@ -1336,7 +1333,7 @@ Resources:
       VolumeId: !Ref ProgSasDataVolume
 
   # 7600G /saswork and /sasutil
-    ProgSasWorkUtilVolume:
+  ProgSasWorkUtilVolume:
     Type: AWS::EC2::Volume
     Properties:
       Size: 7600
@@ -1425,7 +1422,7 @@ Resources:
       IamInstanceProfile: !Ref ViyaProfile
       InstanceType: r4.2xlarge
       EbsOptimized: true
-      # PlacementGroupName: !Ref r4PlacementGroup
+      PlacementGroupName: !Ref ViyaPlacementGroup
       BlockDeviceMappings:
         # / 100G, and /var/log/sas 50G
         - DeviceName: /dev/sda1
@@ -1543,7 +1540,7 @@ Resources:
         - - !Ref CASInstanceType
           - !GetAtt LicenseInfo.NodeInstanceSize
       EbsOptimized: true
-      # PlacementGroupName: !Sub "${CASInstanceType}PlacementGroup"
+      PlacementGroupName: !Ref ViyaPlacementGroup
       BlockDeviceMappings:
         # / 100G, and /var/log/sas 50G
         - DeviceName: /dev/sda1
@@ -1957,7 +1954,7 @@ Resources:
                   - '.'
                   - - !Ref CASInstanceType
                     - !GetAtt LicenseInfo.NodeInstanceSize
-                # PlacementGroupName: ''
+                PlacementGroupName: !Ref ViyaPlacementGroup
                 SecurityGroupIds: !Ref ViyaSecurityGroup
                 SASUserPass: !Ref SASUserPass
                 SASAdminPass: !Ref SASAdminPass

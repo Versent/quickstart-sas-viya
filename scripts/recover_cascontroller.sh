@@ -62,8 +62,7 @@ CASVIYA_VOLUME=$(aws --region "{{AWSRegion}}" cloudformation describe-stack-reso
 test -n {{ImageId}}
 test -n {{InstanceType}}
 test -n {{KeyName}}
-#versent: we abandon placement groups to avoid insufficient capacity for i3 instances
-# test -n {{PlacementGroupName}}
+test -n {{PlacementGroupName}}
 test -n {{SecurityGroupIds}}
 test -n {{SubnetId}}
 test -n {{IamInstanceProfile}}
@@ -77,12 +76,11 @@ test -n $CASVIYA_VOLUME
 #
 # create new instance
 #
-#versent: we abandon placement groups to avoid insufficient capacity for i3 instances
-# --placement GroupName={{PlacementGroupName}} \
 NEW_ID=$(aws --region "{{AWSRegion}}"  ec2 run-instances \
 --image-id {{ImageId}} \
 --instance-type {{InstanceType}} \
 --key-name {{KeyName}} \
+--placement GroupName={{PlacementGroupName}} \
 --security-group-ids {{SecurityGroupIds}} \
 --subnet-id {{SubnetId}} \
 --iam-instance-profile Name={{IamInstanceProfile}} \
