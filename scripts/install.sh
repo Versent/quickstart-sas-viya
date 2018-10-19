@@ -1,3 +1,4 @@
+
 #!/bin/bash -e
 set -x
 
@@ -651,6 +652,9 @@ pushd sas_viya_playbook
     git checkout "$VIRK_COMMIT_ID" 2>> "$CMDLOG"
   popd
   ansible-playbook virk/playbooks/pre-install-playbook/viya_pre_install_playbook.yml --skip-tags skipmemfail,skipcoresfail,skipstoragefail,skipnicssfail,bandwidth -e 'use_pause=false'
+
+  #versent: enable NFS backups
+  ansible-playbook ansible.post.deployment.yml --tags "backups"
 
   #versent: exit before main SAS installation
   exit $?
