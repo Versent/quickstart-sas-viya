@@ -136,7 +136,19 @@
     HTTPS_PROXY: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
     no_proxy: ".internal,.sas,.viya.sas,visual,prog,stateful,controller,localhost,169.254.169.254"
     NO_PROXY: ".internal,.sas,.viya.sas,visual,prog,stateful,controller,localhost,169.254.169.254"
+
   tasks:
+
+  - name: check for xvdd device
+    stat:
+      path: /dev/xvdd
+    register: xvdd
+  - name: format new volume
+    filesystem: fstype=xfs dev=/dev/xvdd
+    when: xvdd.stat.exists == true
+  - name: mount sastmp
+    mount: name=/sastmp fstype=xfs state=mounted src=/dev/xvdd
+    when: xvdd.stat.exists == true
 
   - name: make sure mdadm is installed (versent)
     yum:
