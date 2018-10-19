@@ -816,6 +816,7 @@ Resources:
           Ref: StatefulServices
 
   RecoveryAlarmProgramming:
+    Condition: IsNotI3
     Type: AWS::CloudWatch::Alarm
     Properties:
       AlarmDescription: Trigger a recovery when instance status check fails more than once in 2 minutes.
@@ -861,7 +862,7 @@ Resources:
           Ref: CASController
 
 
-  ViyaPlacementGroup:
+  r4PlacementGroup:
     Type: AWS::EC2::PlacementGroup
 
   i3PlacementGroup:
@@ -1165,16 +1166,18 @@ Resources:
       IamInstanceProfile: !Ref ViyaProfile
       InstanceType: r4.4xlarge
       EbsOptimized: true
-      PlacementGroupName: !Ref ViyaPlacementGroup
+      # PlacementGroupName: !Ref r4PlacementGroup
       BlockDeviceMappings:
+        # / 100G , and /var/log/sas 50G
         - DeviceName: /dev/sda1
           Ebs:
-            VolumeSize: '30'
+            VolumeSize: '200'
             VolumeType: gp2
             DeleteOnTermination: true
+        # /opt/sas 100G
         - DeviceName: /dev/sdg
           Ebs:
-            VolumeSize: '50'
+            VolumeSize: '100'
             VolumeType: gp2
             DeleteOnTermination: true
             Encrypted: true
@@ -1273,9 +1276,9 @@ Resources:
         - RHEL74HVM
       SubnetId: !Ref PrivateSubnetID
       IamInstanceProfile: !Ref ViyaProfile
-      InstanceType: i3.8xlarge # instance storage: 4 x 1,900 GB (7.6TB)
+      InstanceType: !Sub "${CASInstanceType}.8xlarge" # i3 instance storage: 4 x 1,900 GB (7.6TB)
       EbsOptimized: true
-      PlacementGroupName: !Ref i3PlacementGroup
+      # PlacementGroupName: !Sub "${CASInstanceType}PlacementGroup"
       BlockDeviceMappings:
         # / 100G , and /var/log/sas 50G
         - DeviceName: /dev/sda1
@@ -1386,7 +1389,7 @@ Resources:
       IamInstanceProfile: !Ref ViyaProfile
       InstanceType: r4.2xlarge
       EbsOptimized: true
-      PlacementGroupName: !Ref ViyaPlacementGroup
+      # PlacementGroupName: !Ref r4PlacementGroup
       BlockDeviceMappings:
         # / 100G, and /var/log/sas 50G
         - DeviceName: /dev/sda1
@@ -1504,7 +1507,7 @@ Resources:
         - - !Ref CASInstanceType
           - !GetAtt LicenseInfo.NodeInstanceSize
       EbsOptimized: true
-      PlacementGroupName: !Ref i3PlacementGroup
+      # PlacementGroupName: !Sub "${CASInstanceType}PlacementGroup"
       BlockDeviceMappings:
         # / 100G, and /var/log/sas 50G
         - DeviceName: /dev/sda1
@@ -1555,7 +1558,7 @@ Resources:
       InstanceId: !Ref CASController
       VolumeId: !Ref CASViyaVolume
 
-  # 1000G /opt/sas/viya/config/data/cas
+  # 2000G /opt/sas/viya/config/data/cas
   CASLibVolume:
     Type: AWS::EC2::Volume
     Properties:
@@ -1918,7 +1921,7 @@ Resources:
                   - '.'
                   - - !Ref CASInstanceType
                     - !GetAtt LicenseInfo.NodeInstanceSize
-                PlacementGroupName: !Ref ViyaPlacementGroup
+                # PlacementGroupName: ''
                 SecurityGroupIds: !Ref ViyaSecurityGroup
                 SASUserPass: !Ref SASUserPass
                 SASAdminPass: !Ref SASAdminPass
