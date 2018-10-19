@@ -79,9 +79,9 @@ Metadata:
       AWSHostedZoneID:
         default: Route 53 Hosted Zone
       HttpProxyServer:
-        default: URL to http proxy server
+        default: URL to HTTP Proxy Server
       NoProxy:
-        default: list of domains
+        default: No Proxy List
 
 Parameters:
 
