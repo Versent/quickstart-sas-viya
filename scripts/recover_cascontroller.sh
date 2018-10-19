@@ -62,11 +62,14 @@ CASVIYA_VOLUME=$(aws --region "{{AWSRegion}}" cloudformation describe-stack-reso
 test -n {{ImageId}}
 test -n {{InstanceType}}
 test -n {{KeyName}}
-test -n {{PlacementGroupName}}
+#versent: we abandon placement groups to avoid insufficient capacity for i3 instances
+# test -n {{PlacementGroupName}}
 test -n {{SecurityGroupIds}}
 test -n {{SubnetId}}
 test -n {{IamInstanceProfile}}
 test -n {{RAIDScript}}
+test -n {{HttpProxyServer}}
+test -n {{NoProxy}}
 test -n $PRIVATE_IP
 test -n $CASLIB_VOLUME
 test -n $CASVIYA_VOLUME
@@ -74,17 +77,24 @@ test -n $CASVIYA_VOLUME
 #
 # create new instance
 #
+#versent: we abandon placement groups to avoid insufficient capacity for i3 instances
+# --placement GroupName={{PlacementGroupName}} \
 NEW_ID=$(aws --region "{{AWSRegion}}"  ec2 run-instances \
 --image-id {{ImageId}} \
 --instance-type {{InstanceType}} \
 --key-name {{KeyName}} \
---placement GroupName={{PlacementGroupName}} \
 --security-group-ids {{SecurityGroupIds}} \
 --subnet-id {{SubnetId}} \
 --iam-instance-profile Name={{IamInstanceProfile}} \
 --private-ip-address $PRIVATE_IP \
 --user-data \
   '#!/bin/bash
+  export http_proxy="{{HttpProxyServer}}"
+  export https_proxy="{{HttpProxyServer}}"
+  export HTTP_PROXY="{{HttpProxyServer}}"
+  export HTTPS_PROXY="{{HttpProxyServer}}"
+  export no_proxy="{{NoProxy}}"
+  export NO_PROXY="{{NoProxy}}"
    export PATH=$PATH:/usr/local/bin
    # install aws cli
    curl -O https://bootstrap.pypa.io/get-pip.py && python get-pip.py &> /dev/null
@@ -144,6 +154,3 @@ pushd ~/sas_viya_playbook
   fi
 
 popd
-
-
-
