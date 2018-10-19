@@ -1317,6 +1317,42 @@ Resources:
             # Signal the status from cfn-init
             cfn-signal -e $? --stack ${AWS::StackName} --resource ProgrammingServices --region ${AWS::Region}
 
+  # 2000G /sasdata
+  ProgSasDataVolume:
+    Type: AWS::EC2::Volume
+    Properties:
+      Size: 2000
+      VolumeType: gp2
+      Encrypted: true
+      AvailabilityZone: !GetAtt ProgrammingServices.AvailabilityZone
+      Tags:
+        - Key: Name
+          Value: !Sub ${AWS::StackName} Programming Runtime Engine sasdata
+  ProgSasDataAttachment:
+    Type: AWS::EC2::VolumeAttachment
+    Properties:
+      Device: /dev/sdl
+      InstanceId: !Ref ProgrammingServices
+      VolumeId: !Ref ProgSasDataVolume
+
+  # 7600G /saswork and /sasutil
+    ProgSasWorkUtilVolume:
+    Type: AWS::EC2::Volume
+    Properties:
+      Size: 7600
+      VolumeType: gp2
+      Encrypted: true
+      AvailabilityZone: !GetAtt ProgrammingServices.AvailabilityZone
+      Tags:
+        - Key: Name
+          Value: !Sub ${AWS::StackName} Programming Runtime Engine sasworkutil
+  ProgSasWorkUtilAttachment:
+    Type: AWS::EC2::VolumeAttachment
+    Properties:
+      Device: /dev/sdm
+      InstanceId: !Ref ProgrammingServices
+      VolumeId: !Ref ProgSasWorkUtilVolume
+
   StatefulServices:
     Type: AWS::EC2::Instance
     CreationPolicy:
