@@ -486,7 +486,7 @@ Resources:
               rD["CASCacheSize"] = 360
             elif cpucount <= 16:
               rD["NodeInstanceSize"] = "8xlarge"
-              rD["CASLibSize"] = 1000
+              rD["CASLibSize"] = 2000
               rD["UserLibSize"] = 1000
               rD["CASCacheSize"] = 720
             else:
