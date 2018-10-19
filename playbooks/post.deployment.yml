@@ -4,12 +4,12 @@
   become: yes
   become_user: sas
   environment:
-    http_proxy: '{{ ansible_env.http_proxy | default("") }}'
-    https_proxy: '{{ ansible_env.http_proxy | default("") }}'
-    HTTP_PROXY: '{{ ansible_env.HTTP_PROXY | default("") }}'
-    HTTPS_PROXY: '{{ ansible_env.HTTPS_PROXY | default("") }}'
-    no_proxy: '{{ ansible_env.no_proxy | default("") }}'
-    NO_PROXY: '{{ ansible_env.NO_PROXY | default("") }}'
+    http_proxy: '{{HttpProxyServer}}'
+    https_proxy: '{{HttpProxyServer}}'
+    HTTP_PROXY: '{{HttpProxyServer}}'
+    HTTPS_PROXY: '{{HttpProxyServer}}'
+    no_proxy: '{{NoProxy}}'
+    NO_PROXY: '{{NoProxy}}'
   tasks:
   - name: add ELB/Domain to CAS configuration
     lineinfile:
@@ -33,12 +33,12 @@
   become: yes
   become_user: root
   environment:
-    http_proxy: '{{ ansible_env.http_proxy | default("") }}'
-    https_proxy: '{{ ansible_env.http_proxy | default("") }}'
-    HTTP_PROXY: '{{ ansible_env.HTTP_PROXY | default("") }}'
-    HTTPS_PROXY: '{{ ansible_env.HTTPS_PROXY | default("") }}'
-    no_proxy: '{{ ansible_env.no_proxy | default("") }}'
-    NO_PROXY: '{{ ansible_env.NO_PROXY | default("") }}'
+    http_proxy: '{{HttpProxyServer}}'
+    https_proxy: '{{HttpProxyServer}}'
+    HTTP_PROXY: '{{HttpProxyServer}}'
+    HTTPS_PROXY: '{{HttpProxyServer}}'
+    no_proxy: '{{NoProxy}}'
+    NO_PROXY: '{{NoProxy}}'
 
   tasks:
   - name: set up sharedVault
@@ -58,12 +58,12 @@
   become: yes
   become_user: root
   environment:
-    http_proxy: '{{ ansible_env.http_proxy | default("") }}'
-    https_proxy: '{{ ansible_env.http_proxy | default("") }}'
-    HTTP_PROXY: '{{ ansible_env.HTTP_PROXY | default("") }}'
-    HTTPS_PROXY: '{{ ansible_env.HTTPS_PROXY | default("") }}'
-    no_proxy: '{{ ansible_env.no_proxy | default("") }}'
-    NO_PROXY: '{{ ansible_env.NO_PROXY | default("") }}'
+    http_proxy: '{{HttpProxyServer}}'
+    https_proxy: '{{HttpProxyServer}}'
+    HTTP_PROXY: '{{HttpProxyServer}}'
+    HTTPS_PROXY: '{{HttpProxyServer}}'
+    no_proxy: '{{NoProxy}}'
+    NO_PROXY: '{{NoProxy}}'
 
   tasks:
   - name: create and mount /backups directory
@@ -116,12 +116,12 @@
   become: yes
   become_user: root
   environment:
-    http_proxy: '{{ ansible_env.http_proxy | default("") }}'
-    https_proxy: '{{ ansible_env.http_proxy | default("") }}'
-    HTTP_PROXY: '{{ ansible_env.HTTP_PROXY | default("") }}'
-    HTTPS_PROXY: '{{ ansible_env.HTTPS_PROXY | default("") }}'
-    no_proxy: '{{ ansible_env.no_proxy | default("") }}'
-    NO_PROXY: '{{ ansible_env.NO_PROXY | default("") }}'
+    http_proxy: '{{HttpProxyServer}}'
+    https_proxy: '{{HttpProxyServer}}'
+    HTTP_PROXY: '{{HttpProxyServer}}'
+    HTTPS_PROXY: '{{HttpProxyServer}}'
+    no_proxy: '{{NoProxy}}'
+    NO_PROXY: '{{NoProxy}}'
 
   tasks:
 
@@ -145,12 +145,12 @@
   become: yes
   become_user: root
   environment:
-    http_proxy: '{{ ansible_env.http_proxy | default("") }}'
-    https_proxy: '{{ ansible_env.http_proxy | default("") }}'
-    HTTP_PROXY: '{{ ansible_env.HTTP_PROXY | default("") }}'
-    HTTPS_PROXY: '{{ ansible_env.HTTPS_PROXY | default("") }}'
-    no_proxy: '{{ ansible_env.no_proxy | default("") }}'
-    NO_PROXY: '{{ ansible_env.NO_PROXY | default("") }}'
+    http_proxy: '{{HttpProxyServer}}'
+    https_proxy: '{{HttpProxyServer}}'
+    HTTP_PROXY: '{{HttpProxyServer}}'
+    HTTPS_PROXY: '{{HttpProxyServer}}'
+    no_proxy: '{{NoProxy}}'
+    NO_PROXY: '{{NoProxy}}'
 
   tasks:
 
@@ -176,12 +176,12 @@
   become: yes
   become_user: root
   environment:
-    http_proxy: '{{ ansible_env.http_proxy | default("") }}'
-    https_proxy: '{{ ansible_env.http_proxy | default("") }}'
-    HTTP_PROXY: '{{ ansible_env.HTTP_PROXY | default("") }}'
-    HTTPS_PROXY: '{{ ansible_env.HTTPS_PROXY | default("") }}'
-    no_proxy: '{{ ansible_env.no_proxy | default("") }}'
-    NO_PROXY: '{{ ansible_env.NO_PROXY | default("") }}'
+    http_proxy: '{{HttpProxyServer}}'
+    https_proxy: '{{HttpProxyServer}}'
+    HTTP_PROXY: '{{HttpProxyServer}}'
+    HTTPS_PROXY: '{{HttpProxyServer}}'
+    no_proxy: '{{NoProxy}}'
+    NO_PROXY: '{{NoProxy}}'
 
   tasks:
   - name: add controller cloudwatch agent configuration
