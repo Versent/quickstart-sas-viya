@@ -124,3 +124,60 @@
       path: /sastmp/cascache
       state: directory
       mode: 0777
+
+# versent
+- hosts: prog
+  become: yes
+  become_user: root
+  environment:
+    http_proxy: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
+    https_proxy: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
+    HTTP_PROXY: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
+    HTTPS_PROXY: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
+    no_proxy: ".internal,.sas,.viya.sas,visual,prog,stateful,controller,localhost,169.254.169.254"
+    NO_PROXY: ".internal,.sas,.viya.sas,visual,prog,stateful,controller,localhost,169.254.169.254"
+  tasks:
+
+  - name: make sure mdadm is installed (versent)
+    yum:
+      name: mdadm
+      state: present
+  - name: Download disks_ephemeral.sh (versent)
+    shell: |
+      aws --region {{AWSRegion}} s3 cp s3://{{RAIDScript}} /usr/sbin/disks_ephemeral.sh
+      chmod +x /usr/sbin/disks_ephemeral.sh
+  - name: create disks_ephemeral service definition (versent)
+    copy:
+      dest: /etc/systemd/system/disks_ephemeral.service
+      content: |
+        [Unit]
+        Description=Format and Mount Ephemeral Disks
+        [Service]
+        ExecStart=/usr/sbin/disks_ephemeral.sh
+        [Install]
+        WantedBy=multi-user.target
+  - name: reload systemctl (versent)
+    command: systemctl daemon-reload
+  - name: ephemeral disks service (versent)
+    service:
+      name: disks_ephemeral
+      enabled: yes
+      state: started
+
+  - name: create sastmp subdir (versent)
+    file:
+      path: /sastmp
+      state: directory
+      mode: 0777
+
+  - name: create saswork subdir (versent)
+    file:
+      path: /sastmp/saswork
+      state: directory
+      mode: 0777
+
+  - name: create sasutil subdir (versent)
+    file:
+      path: /sastmp/sasutil
+      state: directory
+      mode: 0777

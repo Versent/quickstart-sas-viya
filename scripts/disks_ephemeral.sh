@@ -84,3 +84,12 @@ if [ ! -d /sastmp/cascache/ ]; then
 fi
 chmod 777 /sastmp/cascache
 
+if [ ! -d /sastmp/sasutil/ ]; then
+    mkdir /sastmp/sasutil
+fi
+chmod 777 /sastmp/sasutil
+
+if [ ! -d /sastmp/saswork/ ]; then
+    mkdir /sastmp/saswork
+fi
+chmod 777 /sastmp/saswork
