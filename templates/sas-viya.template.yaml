@@ -1096,7 +1096,7 @@ Resources:
     CreationPolicy:
       ResourceSignal:
         Count: 1
-        Timeout: 'PT10M'
+        Timeout: 'PT20M'
     Metadata:
       'AWS::CloudFormation::Authentication':
         S3AccessCreds:
@@ -1207,7 +1207,7 @@ Resources:
     CreationPolicy:
       ResourceSignal:
         Count: 1
-        Timeout: 'PT10M'
+        Timeout: 'PT20M'
     Metadata:
       'AWS::CloudFormation::Authentication':
         S3AccessCreds:
@@ -1355,7 +1355,7 @@ Resources:
     CreationPolicy:
       ResourceSignal:
         Count: 1
-        Timeout: 'PT10M'
+        Timeout: 'PT20M'
     Metadata:
       'AWS::CloudFormation::Authentication':
         S3AccessCreds:
@@ -1468,7 +1468,7 @@ Resources:
     CreationPolicy:
       ResourceSignal:
         Count: 1
-        Timeout: 'PT10M'
+        Timeout: 'PT20M'
     Metadata:
       'AWS::CloudFormation::Authentication':
         S3AccessCreds:
