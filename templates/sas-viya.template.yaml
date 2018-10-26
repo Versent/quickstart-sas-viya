@@ -486,9 +486,9 @@ Resources:
               rD["CASCacheSize"] = 360
             elif cpucount <= 16:
               rD["NodeInstanceSize"] = "8xlarge"
-              rD["CASLibSize"] = 1000
+              rD["CASLibSize"] = 2000
               rD["UserLibSize"] = 1000
-              rD["CASCacheSize"] = 720
+              rD["CASCacheSize"] = 1000
             else:
               rS = FAILED
               print("Invalid Licensed CPU Count: {0}".format(cpucount))
@@ -1332,7 +1332,7 @@ Resources:
       InstanceId: !Ref ProgrammingServices
       VolumeId: !Ref ProgSasDataVolume
 
-  # 7600G /saswork and /sasutil
+  # 7600G /sastmp/saswork and /sastmp/sasutil
   ProgSasWorkUtilVolume:
     Condition: IsNotI3
     Type: AWS::EC2::Volume
@@ -1348,7 +1348,7 @@ Resources:
     Condition: IsNotI3
     Type: AWS::EC2::VolumeAttachment
     Properties:
-      Device: /dev/sdm
+      Device: /dev/sdd
       InstanceId: !Ref ProgrammingServices
       VolumeId: !Ref ProgSasWorkUtilVolume
 

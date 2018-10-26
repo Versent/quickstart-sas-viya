@@ -36,28 +36,6 @@
       DISK_IDS=$(aws --region {{AWSRegion}} ec2 describe-volumes  --filter "Name=attachment.instance-id, Values=$INSTANCE_ID" --query "Volumes[].VolumeId" --out text)
       aws ec2  --region {{AWSRegion}}  create-tags --resources $DISK_IDS --tags Key=Name,Value="{{CloudFormationStack}} {{inventory_hostname}}" Key=Stack,Value="{{CloudFormationStack}}"
 
-
-
-- hosts: prog
-  become: yes
-  become_user: root
-  environment:
-    http_proxy: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
-    https_proxy: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
-    HTTP_PROXY: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
-    HTTPS_PROXY: http://proxy.cloudopsprod.aws.velocityfrequentflyer.internal:3128
-    no_proxy: ".internal,.sas,.viya.sas,visual,prog,stateful,controller,localhost,169.254.169.254"
-    NO_PROXY: ".internal,.sas,.viya.sas,visual,prog,stateful,controller,localhost,169.254.169.254"
-
-  tasks:
-
-  - name: create saswork subdir
-    file:
-      path: /sastmp/saswork
-      state: directory
-      mode: 0777
-
-
 - hosts: controller
   become: yes
   become_user: root
@@ -139,7 +117,7 @@
 
   tasks:
 
-  - name: check for xvdd device
+  - name: check for xvdd device (versent)
     stat:
       path: /dev/xvdd
     register: xvdd
