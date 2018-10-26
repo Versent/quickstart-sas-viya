@@ -202,12 +202,12 @@
   become: yes
   become_user: root
   environment:
-    http_proxy: '{{ ansible_env.http_proxy | default("") }}'
-    https_proxy: '{{ ansible_env.http_proxy | default("") }}'
-    HTTP_PROXY: '{{ ansible_env.HTTP_PROXY | default("") }}'
-    HTTPS_PROXY: '{{ ansible_env.HTTPS_PROXY | default("") }}'
-    no_proxy: '{{ ansible_env.no_proxy | default("") }}'
-    NO_PROXY: '{{ ansible_env.NO_PROXY | default("") }}'
+    http_proxy: '{{HttpProxyServer}}'
+    https_proxy: '{{HttpProxyServer}}'
+    HTTP_PROXY: '{{HttpProxyServer}}'
+    HTTPS_PROXY: '{{HttpProxyServer}}'
+    no_proxy: '{{NoProxy}}'
+    NO_PROXY: '{{NoProxy}}'
 
   tasks:
 
