@@ -486,7 +486,7 @@ Resources:
               rD["CASCacheSize"] = 360
             elif cpucount <= 16:
               rD["NodeInstanceSize"] = "8xlarge"
-              rD["CASLibSize"] = 2000
+              rD["CASLibSize"] = 1000
               rD["UserLibSize"] = 1000
               rD["CASCacheSize"] = 720
             else:
@@ -1334,9 +1334,10 @@ Resources:
 
   # 7600G /saswork and /sasutil
   ProgSasWorkUtilVolume:
+    Condition: IsNotI3
     Type: AWS::EC2::Volume
     Properties:
-      Size: 7600
+      Size: 1000
       VolumeType: gp2
       Encrypted: true
       AvailabilityZone: !GetAtt ProgrammingServices.AvailabilityZone
@@ -1344,6 +1345,7 @@ Resources:
         - Key: Name
           Value: !Sub ${AWS::StackName} Programming Runtime Engine sasworkutil
   ProgSasWorkUtilAttachment:
+    Condition: IsNotI3
     Type: AWS::EC2::VolumeAttachment
     Properties:
       Device: /dev/sdm
